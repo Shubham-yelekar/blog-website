@@ -1,5 +1,5 @@
 
-import conf from "../conf.js"  // 1. Import the configuration file containing appwriteUrl and projectId
+import conf from "../conf/conf.js"  // 1. Import the configuration file containing appwriteUrl and projectId
 
 import { Client, Account } from "appwrite"; // 2. Import the necessary classes (Client and Account) from the Appwrite library
 
