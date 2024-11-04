@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
- 
+
 
 const Header = () => {
   const authStatus = useSelector((state) => state.auth.status)
@@ -15,7 +15,7 @@ const Header = () => {
       name: 'Home',
       slug: "/",
       active: true
-    }, 
+    },
     {
       name: "Login",
       slug: "/login",
@@ -38,8 +38,35 @@ const Header = () => {
   },
   ]
 
-  return ( 
-    <div>Header</div>
+  return (
+    <header className='py-3 bg-slate-600'>
+      <Container>
+        <nav className='flex'>
+          <div className='mr-4'>
+            <Link to='/'>
+              <Logo width='72px'/>
+            </Link>
+            <ul className='flex ml-auto'>
+              {navItems.map((item)=>
+                item.active ? (
+                  <li key={item.name}>
+                    <button
+                    onClick={()=> navigate(item.slug)}
+                    className='inline-block px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
+                    >{item.name}</button>
+                  </li>
+                ):null
+              )}
+              {authStatus && (
+                <li>
+                  <LogoutBtn/>
+                </li>
+              )}
+            </ul>
+          </div>
+        </nav>
+      </Container>
+    </header>
   )
 }
 

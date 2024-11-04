@@ -7,13 +7,13 @@ import { Client, Account } from "appwrite"; // 2. Import the necessary classes (
 export class AuthService {
     client = new Client();  // Initialize a new Client instance
     account;  // Placeholder for the Account instance
-    
+
     constructor(){
         // Set up the Appwrite client with the endpoint and project ID from the config file
         this.client
         .setEndpoint(conf.appwriteUrl)
         .setProject(conf.appwriteProjectId);
-        
+
         // Initialize the Account instance using the configured client
         this.account = new Account(this.client)
     }
@@ -23,10 +23,10 @@ export class AuthService {
         try{
            // Attempt to create a new user account using a unique ID and provided credentials
            const userAccount =  await this.account.create(ID.unique(), email, password, name)
-           
+
            // If account creation is successful, log the user in and return the session
            if(userAccount){
-            return this.logIn({email,password})
+            return this.login({email,password})
            } else {
             return userAccount;  // If creation fails, return the user account response
            }
@@ -36,7 +36,7 @@ export class AuthService {
     }
 
     // Method to log in a user with their email and password
-    async logIn({email, password}) {
+    async login({email, password}) {
         try {
             // Create a new session with the provided credentials and return it
             return await this.account.createEmailPasswordSession(email, password);
@@ -49,7 +49,7 @@ export class AuthService {
     async getCurrentUser(){
         try {
             // Attempt to get the current user's account information
-            return await this.account.get(); 
+            return await this.account.get();
         } catch (error) {
             console.log("Appwrite Service :: getCurrentUser :: error", error)  // Log any errors encountered
         }

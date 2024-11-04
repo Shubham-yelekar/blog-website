@@ -1,4 +1,4 @@
-import conf from "../conf.js"  // 1. Import the configuration file containing appwriteUrl and projectId
+import conf from "../conf/conf"  // 1. Import the configuration file containing appwriteUrl and projectId
 
 import { Client, Databases, ID , Storage, Query} from "appwrite"; // 2. Import the necessary classes (Client and Account) from the Appwrite library
 
@@ -87,10 +87,10 @@ export class Service{
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 queries,
-                  
+
             )
         } catch (error)     {
-            console.log("Appwrite : getPosts", error)            
+            console.log("Appwrite : getPosts", error)
         }
     }
 
@@ -104,7 +104,7 @@ export class Service{
                 file
             )
         } catch (error) {
-            console.log("Appwrite : uploadFile", error)  
+            console.log("Appwrite : uploadFile", error)
         }
     }
 
@@ -116,7 +116,7 @@ export class Service{
             )
             return true
         } catch (error) {
-            console.log("Appwrite : deletFile", error)  
+            console.log("Appwrite : deletFile", error)
             return false
         }
     }
