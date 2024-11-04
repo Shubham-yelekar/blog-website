@@ -1,7 +1,7 @@
 
 import conf from "../conf/conf.js"  // 1. Import the configuration file containing appwriteUrl and projectId
 
-import { Client, Account } from "appwrite"; // 2. Import the necessary classes (Client and Account) from the Appwrite library
+import { Client, Account, ID } from "appwrite"; // 2. Import the necessary classes (Client and Account) from the Appwrite library
 
 // Define the AuthService class to handle authentication-related functionality
 export class AuthService {
@@ -11,8 +11,8 @@ export class AuthService {
     constructor(){
         // Set up the Appwrite client with the endpoint and project ID from the config file
         this.client
-        .setEndpoint(conf.appwriteUrl)
-        .setProject(conf.appwriteProjectId);
+            .setEndpoint(conf.appwriteUrl)
+            .setProject(conf.appwriteProjectId);
 
         // Initialize the Account instance using the configured client
         this.account = new Account(this.client)

@@ -4,6 +4,7 @@ import {useDispatch} from 'react-redux'
 import authService from "./appwrite/auth"
 import {login ,logout} from "./store/authSlice"
 import { Footer, Header } from './components'
+import { Outlet } from 'react-router-dom'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -20,14 +21,16 @@ function App() {
     })
     .finally(()=> setLoading(false))
   }, [])
-  
+
   return !loading ? (
-    <div className='bg-slate-900 min-h-screen content-between text-slate-100'>
-      <Header/>
-        <main>
-         body {/* <Outlet></Outlet> */}
-        </main>
-      <Footer/>
+    <div className='bg-gray-950 min-h-screen content-between text-slate-100'>
+      <div className='w-full block'>
+        <Header/>
+          <main>
+            TODO:  <Outlet />
+          </main>
+        <Footer/>
+      </div>
     </div>
   ) : null;
 }
