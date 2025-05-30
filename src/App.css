@@ -97,6 +97,38 @@ p {
   transform: scale(0.98);
 }
 
+/* From Uiverse.io by vinodjangid07 */
+.input-wrapper {
+  height: 45px;
+  border-radius: 48px;
+  padding: 5px;
+  box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-studio-50);
+  overflow: hidden;
+}
+
+.input {
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  padding-left: 15px;
+  background-color: var(--color-studio-50);
+  color: rgb(29, 29, 29);
+  font-size: 1em;
+}
+.input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #292524 inset;
+  -webkit-text-fill-color: #ffffff;
+}
+.input-wrapper button {
+  height: 100%;
+  padding: 4px 12px;
+  width: auto;
+}
+
 @media screen and (max-width: 700px) {
   .primary-btn {
     font-size: 14px;
