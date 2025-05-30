@@ -1,5 +1,112 @@
 @import "tailwindcss";
 
-:root {
-  background-color: #1d1d1d;
+@theme {
+  --color-studio-50: #f7f5f9;
+  --color-studio-100: #d6cee1;
+  --color-studio-200: #b6a6c8;
+  --color-studio-300: #957fb0;
+  --color-studio-400: #745798;
+  --color-studio-450: #54307f;
+  --color-studio-500: #330867;
+  --color-studio-550: #2b0757;
+  --color-studio-600: #230546;
+  --color-studio-700: #1b0436;
+  --color-studio-800: #0a0215;
+  --color-studio-900: #f7f5f9;
+  --color-studio-1000: #020004;
+}
+
+body {
+  font-family: "Bricolage Grotesque", sans-serif;
+}
+
+h1 {
+  font-size: clamp(3rem, 1rem + 5vw, 5rem);
+  line-height: clamp(3rem, 1rem + 5vw, 5rem);
+  letter-spacing: -0.08rem;
+}
+
+h2 {
+  font-size: clamp(2.5rem, 1rem + 3vw, 3.8rem);
+  line-height: clamp(2.5rem, 1rem + 3vw, 3.8rem);
+  letter-spacing: -0.07rem;
+}
+
+h3 {
+  font-size: clamp(2rem, 1rem + 2vw, 2.4rem);
+  line-height: clamp(2.2rem, 1rem + 2vw, 2.4rem);
+  letter-spacing: -0.06rem;
+}
+h4 {
+  font-size: clamp(1.2rem, 1rem + 1vw, 1.8rem);
+  line-height: clamp(1.5rem, 1rem + 1vw, 2.2rem);
+  letter-spacing: -0.05rem;
+}
+
+h5 {
+  font-size: clamp(0.6rem, 1rem + 0.5vw, 1.6rem);
+  line-height: clamp(1.2rem, 1rem + 0.5vw, 2rem);
+  letter-spacing: -0.04rem;
+}
+
+h6 {
+  font-size: clamp(0.6rem, 1rem + 0vw, 1rem);
+  line-height: clamp(0.4rem, 1rem + 0vw, 1.4rem);
+  letter-spacing: -0.04rem;
+}
+
+p {
+  font-size: clamp(0.2rem, 0.8rem + 1vw, 1rem);
+  line-height: clamp(1rem, 0.8rem + 1vw, 1.4rem);
+}
+
+.primary-btn {
+  background: linear-gradient(
+    0deg,
+    var(--color-studio-400),
+    var(--color-studio-600)
+  );
+  width: 8rem;
+  color: var(--color-studio-50);
+  padding: 10px 24px;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.4 ease-in-out;
+}
+
+.primary-btn:hover {
+  transform: scale(0.98);
+}
+
+.secondary-btn {
+  width: 8rem;
+  background: linear-gradient(
+    0deg,
+    var(--color-studio-100),
+    var(--color-studio-100)
+  );
+  color: var(--color-studio-800);
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.4 ease-in-out;
+}
+
+.secondary-btn:hover {
+  transform: scale(0.98);
+}
+
+@media screen and (max-width: 700px) {
+  .primary-btn {
+    font-size: 14px;
+    width: 4.5rem;
+    padding: 6px 4px;
+  }
+
+  .secondary-btn {
+    font-size: 14px;
+    width: 4.5rem;
+    padding: 6px 4px;
+  }
 }
