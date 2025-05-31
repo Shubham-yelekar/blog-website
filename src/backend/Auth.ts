@@ -7,6 +7,11 @@ interface AccountInt {
   name: string;
 }
 
+interface LoginData {
+  email: string;
+  password: string;
+}
+
 export class AuthService {
   // creating a class of Authentication services
   // Initialise appwrite client
@@ -32,6 +37,10 @@ export class AuthService {
       );
       if (userAccount) {
         // Automatically log in the user after account creation
+        return this.login({
+          email,
+          password,
+        });
       } else {
         return userAccount;
       }
@@ -41,7 +50,7 @@ export class AuthService {
   }
 
   // Log in an existing user with email and password
-  async login({ email, password }: AccountInt) {
+  async login({ email, password }: LoginData) {
     try {
       return await this.account.createEmailPasswordSession(email, password);
     } catch (error) {

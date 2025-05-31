@@ -1,15 +1,18 @@
+import { Outlet } from "react-router";
 import "./App.css";
+
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
-import Card from "./components/Card";
-
+import Main from "./components/Main";
 function App() {
   return (
-    <>
+    <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
       <Header />
-
+      <Main>
+        <Outlet />
+      </Main>
       <Footer />
-    </>
+    </div>
   );
 }
 

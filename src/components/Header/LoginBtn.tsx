@@ -1,13 +1,12 @@
-import Button from "../Button"
-
+import Button from "../Button";
+import { Link } from "react-router";
 // Link to the Login page
 const LoginBtn = () => {
-
   return (
-    <Button className="secondary-btn">
-      Login
-    </Button>
-  )
-}
+    <Link to={"/login"}>
+      <Button className="secondary-btn">Login</Button>
+    </Link>
+  );
+};
 
-export default LoginBtn
+export default LoginBtn;

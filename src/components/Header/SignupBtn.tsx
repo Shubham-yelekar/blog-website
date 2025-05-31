@@ -1,10 +1,12 @@
-import Button from "../Button"
-
+import { Link } from "react-router";
+import Button from "../Button";
 
 const SignupBtn = () => {
   return (
-    <Button>Sign up</Button>
-  )
-}
+    <Link to={"/signup"}>
+      <Button>Sign up</Button>
+    </Link>
+  );
+};
 
-export default SignupBtn
+export default SignupBtn;
