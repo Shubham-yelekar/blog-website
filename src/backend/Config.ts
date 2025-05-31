@@ -17,7 +17,7 @@ export class Service {
   constructor() {
     this.client = new Client()
       .setEndpoint(conf.appwriteUrl)
-      .setEndpoint(conf.appwriteProjectId);
+      .setProject(conf.appwriteProjectId);
 
     this.databases = new Databases(this.client);
     this.storage = new Storage(this.client);
@@ -121,7 +121,7 @@ export class Service {
     }
   }
 
-  getFilePrevive(fileId: string) {
+  getFilePreview(fileId: string) {
     return this.storage.getFilePreview(conf.appwriteBucketId, fileId);
   }
 }
