@@ -13,14 +13,61 @@ import {
   AddForm,
   HomePage,
 } from "./Pages";
+import AuthLayout from "./components/AuthLayout.tsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
       { path: "", element: <HomePage /> },
-      { path: "/login", element: <LoginPage /> },
-      { path: "/signup", element: <SignupPage /> },
+      {
+        path: "/login",
+        element: (
+          <AuthLayout isProtected={false}>
+            <LoginPage />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/signup",
+        element: (
+          <AuthLayout isProtected={false}>
+            <SignupPage />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/all-posts",
+        element: (
+          <AuthLayout isProtected>
+            {""}
+            <AllPost />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/add-post",
+        element: (
+          <AuthLayout isProtected>
+            {""}
+            <AddForm />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/edit-post/:slug",
+        element: (
+          <AuthLayout isProtected>
+            {""}
+            <EditPost />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/post/:slug",
+        element: <Post />,
+      },
     ],
   },
 ]);

@@ -24,7 +24,7 @@ const AuthLayout = ({ children, isProtected = true }: AuthLayoutProps) => {
     setLoader(false);
   }, [authStatus, navigate, isProtected]);
 
-  return loader ? <h1>Loading</h1> : { children };
+  return loader ? <h1>Loading</h1> : <>{children}</>;
 };
 
 export default AuthLayout;
