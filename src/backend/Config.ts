@@ -10,6 +10,13 @@ interface serviceInt {
   userId: string;
 }
 
+interface UpdatePostParams {
+  title?: string;
+  content?: string;
+  featuredImage?: string;
+  status?: string;
+}
+
 export class Service {
   client: Client;
   databases: Databases;
@@ -43,13 +50,10 @@ export class Service {
     }
   }
 
-  async updatePost({
-    slug,
-    title,
-    content,
-    featuredImage,
-    status,
-  }: serviceInt) {
+  async updatePost(
+    slug: string,
+    { title, content, featuredImage, status }: UpdatePostParams
+  ) {
     try {
       return await this.databases.updateDocument(
         conf.appwriteDatabaseId,
@@ -103,8 +107,12 @@ export class Service {
 
   async uploadfile(file: File) {
     try {
-      await this.storage.createFile(conf.appwriteBucketId, ID.unique(), file);
-      return false;
+      const response = await this.storage.createFile(
+        conf.appwriteBucketId,
+        ID.unique(),
+        file
+      );
+      return response;
     } catch (error) {
       console.log(`Error in file Upload : ${error}`);
       return false;
