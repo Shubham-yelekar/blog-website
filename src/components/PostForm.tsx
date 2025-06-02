@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Button, Input, Select, RTE } from "./index";
 import service from "../backend/Config";
 import { useNavigate } from "react-router";
@@ -96,6 +96,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
           });
         }
     });
+    return () => subcription.unsubscribe();
   }, [watch, slugTransform, setValue]);
 
   return (
@@ -150,9 +151,9 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
           className="mb-4"
           {...register("status", { required: true })}
         />
-        <button type="submit" className="secondary-btn">
+        <Button type="submit" className="secondary-btn">
           {post ? "Update" : "Submit"}
-        </button>
+        </Button>
       </div>
     </form>
   );
