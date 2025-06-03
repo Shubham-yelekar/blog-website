@@ -17,6 +17,8 @@ interface Post extends Models.Document {
 
 const Post = () => {
   const [post, setPost] = useState<Post | null>(null);
+  console.log(post);
+
   const { slug } = useParams();
   const navigate = useNavigate();
   const userData = useSelector((state: RootState) => state.auth.userData);
@@ -74,6 +76,17 @@ const Post = () => {
             <span className="text-studio-450 font-bold"> {userData?.name}</span>
           </p>
           <div className="w-full h-[1px] bg-studio-100"></div>
+          <div className="flex gap-2 flex-wrap mt-2">
+            {post?.tags &&
+              post?.tags.map((tag: string) => (
+                <div
+                  className={`border px-4 py-1 rounded-full text-sm font-semibold  bg-studio-400 text-white`}
+                  key={`${tag}:tag`}
+                >
+                  {tag}
+                </div>
+              ))}
+          </div>
         </div>
         <div className="browser-css blog-page p-2 ">{parse(post.content)}</div>
       </BlogWrapper>

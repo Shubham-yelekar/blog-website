@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Input, Select, RTE } from "./index";
 import service from "../backend/Config";
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import type { RootState } from "../state/store.ts";
 import { useSelector } from "react-redux";
 import { ID } from "appwrite";
+import tags from "./Constants/TagsOptions.ts";
 
 interface FormData {
   slug?: string;
@@ -15,6 +16,8 @@ interface FormData {
   status?: string;
   userId?: string;
   image?: FileList;
+  tags?: string[];
+  author?: string;
 }
 
 interface PostFormProps {
@@ -22,6 +25,16 @@ interface PostFormProps {
 }
 
 const PostForm: React.FC<PostFormProps> = ({ post }) => {
+  const [selectedTag, setSelectedTag] = useState<string[]>(post?.tags || []);
+
+  const toggleTag = (tag: string) => {
+    setSelectedTag((prevTags) =>
+      prevTags.includes(tag)
+        ? prevTags.filter((t) => t !== tag)
+        : [...prevTags, tag]
+    );
+  };
+
   const { register, handleSubmit, watch, setValue, getValues, control } =
     useForm<FormData>({
       defaultValues: {
@@ -39,17 +52,18 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
         ? await service.uploadfile(data.image[0])
         : null;
 
-      if (post?.slug) {
+      if (post?.$id) {
         // Update post
         if (file && post.featuredImage) {
           await service.deleteFile(post.featuredImage);
         }
 
-        const updatedPost = await service.updatePost(post.slug, {
+        const updatedPost = await service.updatePost(post.$id, {
           title: data.title,
           content: data.content,
           status: data.status,
           featuredImage: file ? file.$id : post.featuredImage,
+          tags: selectedTag,
         });
 
         if (updatedPost) {
@@ -66,6 +80,8 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
           status: data.status || "active",
           featuredImage: file.$id,
           userId: userData?.$id || "",
+          tags: selectedTag,
+          author: userData?.name || "Anonymous",
         });
 
         if (newPost) {
@@ -80,10 +96,13 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
   const slugTransform = useCallback((value: string) => {
     if (value) {
       return value
-        .trim()
         .toLowerCase()
-        .replace(/[^a-zA-Z\d\s]+/g, "-")
-        .replace(/\s/g, "-");
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and dashes
+        .replace(/\s+/g, "-") // Replace spaces with dashes
+        .replace(/-+/g, "-") // Replace multiple dashes with a single one
+        .replace(/^-+|-+$/g, "") // Trim dashes from start and end
+        .slice(0, 36); // Limit to 36 characters
     }
   }, []);
 
@@ -116,7 +135,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
           className="mb-5 cursor-not-allowed"
           {...register("slug", { required: true })}
           readOnly
-          onChange={(e) =>
+          onInput={(e) =>
             setValue("slug", slugTransform(e.currentTarget.value), {
               shouldValidate: true,
             })
@@ -131,7 +150,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
       </div>
       <div className="w-1/3 px-2">
         <Input
-          label="FeaturedImage :"
+          label="Cover Image"
           type="file"
           className="mb-4"
           accept="image/png, image/jpg, image/jpeg, image/gif"
@@ -148,11 +167,30 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
         )}
         <Select
           options={["active", "inactive"]}
-          label="status"
+          label="Status"
           className="mb-4"
           {...register("status", { required: true })}
         />
-        <Button type="submit" className="secondary-btn">
+        Tags
+        <div className="flex gap-2 flex-wrap mt-2">
+          {tags &&
+            tags.map((tag) => (
+              <button
+                type="button"
+                className={`text-sm border  px-4 py-2 rounded-full ${
+                  selectedTag.includes(tag.tag)
+                    ? "bg-studio-400 text-white"
+                    : "border-studio-200"
+                }`}
+                onClick={() => toggleTag(tag.tag)}
+                key={tag.tag}
+              >
+                {tag.name}
+              </button>
+            ))}
+        </div>
+        <hr className="border-studio-100 my-4" />
+        <Button type="submit" className="secondary-btn w-full!">
           {post ? "Update" : "Submit"}
         </Button>
       </div>

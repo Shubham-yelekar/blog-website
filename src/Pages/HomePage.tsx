@@ -44,7 +44,7 @@ const HomePage = () => {
   return (
     <div className="w-full py-8">
       <Main>
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-4 max-w-[1200px] m-auto md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <div key={post.$id} className="">
               <Card {...post} />

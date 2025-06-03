@@ -1,8 +1,11 @@
+import { Main } from "../components";
 import Login from "../components/Login";
 const LoginPage = () => {
   return (
     <div className="flex items-center justify-center">
-      <Login />
+      <Main>
+        <Login />
+      </Main>
     </div>
   );
 };

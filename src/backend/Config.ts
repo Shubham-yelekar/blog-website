@@ -8,6 +8,8 @@ interface serviceInt {
   featuredImage: string;
   status: string;
   userId: string;
+  author: string;
+  tags: string[];
 }
 
 interface UpdatePostParams {
@@ -15,6 +17,7 @@ interface UpdatePostParams {
   content?: string;
   featuredImage?: string;
   status?: string;
+  tags: string[];
 }
 
 export class Service {
@@ -37,13 +40,15 @@ export class Service {
     featuredImage,
     status,
     userId,
+    author,
+    tags,
   }: serviceInt) {
     try {
       return await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
-        slug,
-        { title, content, featuredImage, status, userId }
+        ID.unique(),
+        { title, content, featuredImage, status, userId, author, tags }
       );
     } catch (error) {
       throw new Error(`Error in creating post: ${error}`);
@@ -52,14 +57,14 @@ export class Service {
 
   async updatePost(
     slug: string,
-    { title, content, featuredImage, status }: UpdatePostParams
+    { title, content, featuredImage, status, tags }: UpdatePostParams
   ) {
     try {
       return await this.databases.updateDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
         slug,
-        { title, content, featuredImage, status }
+        { title, content, featuredImage, status, tags }
       );
     } catch (error) {
       throw new Error(`Error in Update post: ${error}`);
