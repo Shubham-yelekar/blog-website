@@ -11,10 +11,14 @@ interface AuthState {
   userData: User | null;
 }
 
-const initialState: AuthState = {
-  status: false,
-  userData: null,
-};
+const storedAuth = sessionStorage.getItem("auth");
+
+const initialState: AuthState = storedAuth
+  ? JSON.parse(storedAuth)
+  : {
+      status: false,
+      userData: null,
+    };
 
 const authSlice = createSlice({
   name: "auth",
@@ -22,11 +26,14 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<User>) => {
       state.status = true;
-      state.userData = action.payload.user;
+      state.userData = action.payload;
+      sessionStorage.setItem("auth", JSON.stringify(state));
     },
     logout: (state) => {
       state.status = false;
       state.userData = null;
+      console.log(state);
+      sessionStorage.removeItem("auth");
     },
   },
 });

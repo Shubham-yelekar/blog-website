@@ -1,5 +1,6 @@
 import { Editor } from "@tinymce/tinymce-react";
 import { Controller, type Control } from "react-hook-form";
+import conf from "../conf/conf";
 
 interface RTEProps {
   name: string;
@@ -18,6 +19,7 @@ const RTE = ({ name, control, label, defaultValue = "" }: RTEProps) => {
         defaultValue={defaultValue}
         render={({ field: { onChange } }) => (
           <Editor
+            apiKey={conf.tinymceAPIKey}
             onEditorChange={onChange}
             init={{
               height: 500,

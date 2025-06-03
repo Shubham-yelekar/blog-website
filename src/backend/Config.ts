@@ -101,7 +101,7 @@ export class Service {
       );
     } catch (error) {
       console.log("Appwrite serive :: getPosts :: error", error);
-      return null;
+      return { documents: [] };
     }
   }
 
