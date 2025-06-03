@@ -8,8 +8,10 @@ import PostForm from "./PostForm";
 import AuthLayout from "./AuthLayout";
 import Card from "./Card";
 import Signup from "./Signup";
+import BlogWrapper from "./BlogWrapper";
 export {
   RTE,
+  BlogWrapper,
   Button,
   Input,
   Select,

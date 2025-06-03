@@ -142,3 +142,50 @@ p {
     padding: 6px 4px;
   }
 }
+
+.blog-page h1 {
+  font-size: clamp(2.4rem, 1rem + 2.4vw, 3.2rem);
+  line-height: clamp(3.6rem, 1rem + 3.6vw, 4.2rem);
+  /* letter-spacing: -0.08rem; */
+}
+
+.blog-page h2 {
+  font-size: clamp(1.8rem, 1rem + 2vw, 2.4rem);
+  line-height: clamp(2.4rem, 1rem + 2.4vw, 3.2rem);
+  /* letter-spacing: -0.07rem; */
+}
+
+.blog-page h3 {
+  font-size: clamp(1.4rem, 1rem + 1.6vw, 2rem);
+  line-height: clamp(2.8rem, 1rem + 2.8vw, 3.4rem);
+  /* letter-spacing: -0.06rem; */
+}
+.blog-page h4 {
+  font-size: clamp(1rem, 1rem + 0.5vw, 1.6rem);
+  line-height: clamp(2rem, 1rem + 2vw, 3.6rem);
+  /* letter-spacing: -0.04rem; */
+}
+
+.blog-page h5 {
+  font-size: clamp(0.6rem, 1rem + 0.2vw, 1rem);
+  line-height: clamp(1.2rem, 1rem + 0.8vw, 2rem);
+  letter-spacing: -0.04rem;
+}
+
+.blog-page h6 {
+  font-size: clamp(0.4rem, 1rem + 0vw, 0.8rem);
+  line-height: clamp(0.8rem, 1rem + 0vw, 1.4rem);
+  letter-spacing: -0.04rem;
+}
+
+.blog-page p {
+  font-size: clamp(0.2rem, 0.8rem + 1vw, 1rem);
+  line-height: clamp(1rem, 0.8rem + 1vw, 1.4rem);
+  color: #313131;
+}
+
+.blog-page hr {
+  margin: 16px 0px;
+  background-color: #646464;
+  color: #646464;
+}

@@ -132,6 +132,10 @@ export class Service {
   getFilePreview(fileId: string) {
     return this.storage.getFilePreview(conf.appwriteBucketId, fileId);
   }
+
+  getFileView(fileId: string) {
+    return this.storage.getFileView(conf.appwriteBucketId, fileId);
+  }
 }
 
 const service = new Service();

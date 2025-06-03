@@ -8,9 +8,9 @@ function App() {
   return (
     <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
       <Header />
-      <Main>
-        <Outlet />
-      </Main>
+
+      <Outlet />
+
       <Footer />
     </div>
   );

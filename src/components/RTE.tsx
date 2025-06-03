@@ -22,6 +22,7 @@ const RTE = ({ name, control, label, defaultValue = "" }: RTEProps) => {
             apiKey={conf.tinymceAPIKey}
             onEditorChange={onChange}
             init={{
+              referrer_policy: "origin",
               height: 500,
               menubar: true,
               plugins: [

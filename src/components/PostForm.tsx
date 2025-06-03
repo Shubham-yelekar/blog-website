@@ -113,8 +113,9 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
           type="text"
           label="Slug"
           placeholder="title"
-          className="mb-5"
+          className="mb-5 cursor-not-allowed"
           {...register("slug", { required: true })}
+          readOnly
           onChange={(e) =>
             setValue("slug", slugTransform(e.currentTarget.value), {
               shouldValidate: true,
@@ -122,7 +123,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
           }
         />
         <RTE
-          label="content"
+          label="Content"
           control={control}
           name="content"
           defaultValue={getValues("content")}
@@ -139,7 +140,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
         {post?.featuredImage && (
           <div className="w-full mb-4">
             <img
-              src={service.getFilePreview(post.featuredImage)}
+              src={service.getFileView(post.featuredImage)}
               alt={post.title}
               className="rounded-lg"
             />
