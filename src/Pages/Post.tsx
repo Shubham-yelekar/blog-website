@@ -55,33 +55,37 @@ const Post = () => {
       <BlogWrapper>
         <div className="w-full mb-6 p-2 relative">
           <h2 className="text-2xl font-bold mb-4">{post.title}</h2>
-          <p className="mb-4 text-studio-200 relative">
-            By
-            <span className="text-studio-450 font-bold"> {userData?.name}</span>
-            <span>
-              {isAuthor && (
-                <div className="absolute right-0 top-0">
-                  <Link to={`/edit-post/${post.$id}`}>
-                    <Button className="bg-studio-50 px-4 py-1 rounded-full text-sm font-semibold shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)]">
-                      Edit
-                    </Button>
-                  </Link>
-                  <Button
-                    className=" px-4 py-1 bg-red-600 text-white rounded-full text-sm font-semibold shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)] ml-2"
-                    onClick={deletePost}
-                  >
-                    Delete
+          <div className="relative">
+            <p className="mb-4 text-studio-200 relative">
+              By
+              <span className="text-studio-450 font-bold">
+                {" "}
+                {userData?.name}
+              </span>
+            </p>
+            {isAuthor && (
+              <div className="absolute right-0 bottom-0">
+                <Link to={`/edit-post/${post.$id}`}>
+                  <Button className="bg-studio-50 px-4 py-1 rounded-full text-sm font-semibold shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)]">
+                    Edit
                   </Button>
-                </div>
-              )}
-            </span>
-          </p>
+                </Link>
+                <Button
+                  className=" px-4 py-1 bg-red-600 text-white rounded-full text-sm font-semibold shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)] ml-2"
+                  onClick={deletePost}
+                >
+                  Delete
+                </Button>
+              </div>
+            )}
+          </div>
+
           <div className="w-full h-[1px] bg-studio-100"></div>
           <div className="flex gap-2 flex-wrap mt-2">
             {post?.tags &&
               post?.tags.map((tag: string) => (
                 <div
-                  className={`border px-4 py-1 rounded-full text-sm font-semibold  bg-studio-400 text-white`}
+                  className={`border px-4 py-1 rounded-full text-sm font-semibold capitalize  bg-studio-400 text-white`}
                   key={`${tag}:tag`}
                 >
                   {tag}

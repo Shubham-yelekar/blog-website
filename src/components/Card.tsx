@@ -33,7 +33,7 @@ const Card = ({ $id, title, featuredImage, author, tags }: cardType) => {
           <div className="flex flex-col flex-grow-1 gap-3 justify-between items-stretch">
             <h5 className="font-semibold">{title}</h5>
             <p className="text-studio-300 text-sm ">
-              By <span className="text-studio-800 font-semibold">{author}</span>
+              By <span className="text-[#772d8a] font-semibold">{author}</span>
             </p>
           </div>
         </div>

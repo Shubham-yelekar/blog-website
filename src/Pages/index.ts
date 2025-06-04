@@ -5,4 +5,14 @@ import HomePage from "./HomePage";
 import LoginPage from "./LoginPage";
 import Post from "./Post";
 import SignupPage from "./SignupPage";
-export { AddForm, AllPost, EditPost, HomePage, LoginPage, Post, SignupPage };
+import YourPage from "./YourPage";
+export {
+  AddForm,
+  AllPost,
+  EditPost,
+  HomePage,
+  LoginPage,
+  Post,
+  SignupPage,
+  YourPage,
+};

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Input, Select, RTE } from "./index";
 import service from "../backend/Config";
@@ -7,6 +7,7 @@ import type { RootState } from "../state/store.ts";
 import { useSelector } from "react-redux";
 import { ID } from "appwrite";
 import tags from "./Constants/TagsOptions.ts";
+import { Query } from "appwrite";
 
 interface FormData {
   slug?: string;
@@ -26,7 +27,9 @@ interface PostFormProps {
 
 const PostForm: React.FC<PostFormProps> = ({ post }) => {
   const [selectedTag, setSelectedTag] = useState<string[]>(post?.tags || []);
-
+  const [previewImage, setPreviewImage] = useState<string | null>(
+    post?.featuredImage ? service.getFileView(post.featuredImage) : null
+  );
   const toggleTag = (tag: string) => {
     setSelectedTag((prevTags) =>
       prevTags.includes(tag)
@@ -44,13 +47,27 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
         status: post?.status || "active",
       },
     });
+
   const navigate = useNavigate();
   const userData = useSelector((state: RootState) => state.auth.userData);
+  const isSlugUnique = async (slug: string): Promise<boolean> => {
+    const existingPosts = await service.getPosts([Query.equal("slug", slug)]);
+    return existingPosts.documents.length === 0;
+  };
+
   const submit = async (data: FormData & { image?: FileList }) => {
     try {
       const file = data.image?.[0]
         ? await service.uploadfile(data.image[0])
         : null;
+
+      let slug = slugTransform(data.title || "");
+
+      const isUnique = await isSlugUnique(slug);
+
+      if (!isUnique) {
+        slug = `${slug}-${Date.now()}`; // Append timestamp to ensure uniqueness
+      }
 
       if (post?.$id) {
         // Update post
@@ -118,9 +135,17 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
     return () => subcription.unsubscribe();
   }, [watch, slugTransform, setValue]);
 
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const previewURL = URL.createObjectURL(file);
+      setPreviewImage(previewURL);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
+      <div className="w-full p-2 md:w-2/3">
         <Input
           type="text"
           label="Title"
@@ -148,21 +173,18 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
           defaultValue={getValues("content")}
         />
       </div>
-      <div className="w-1/3 px-2">
+      <div className="w-full p-2 md:w-1/3">
         <Input
           label="Cover Image"
           type="file"
           className="mb-4"
           accept="image/png, image/jpg, image/jpeg, image/gif"
           {...register("image", { required: !post })}
+          onChange={handleImageChange}
         />
-        {post?.featuredImage && (
+        {previewImage && (
           <div className="w-full mb-4">
-            <img
-              src={service.getFileView(post.featuredImage)}
-              alt={post.title}
-              className="rounded-lg"
-            />
+            <img src={previewImage} alt={previewImage} className="rounded-lg" />
           </div>
         )}
         <Select

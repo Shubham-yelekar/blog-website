@@ -12,6 +12,7 @@ import {
   Post,
   AddForm,
   HomePage,
+  YourPage,
 } from "./Pages";
 import AuthLayout from "./components/AuthLayout.tsx";
 
@@ -43,6 +44,15 @@ const router = createBrowserRouter([
           <AuthLayout isProtected={false}>
             {""}
             <AllPost />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/your-posts",
+        element: (
+          <AuthLayout isProtected={true}>
+            {""}
+            <YourPage />
           </AuthLayout>
         ),
       },

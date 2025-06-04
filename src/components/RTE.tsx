@@ -21,6 +21,7 @@ const RTE = ({ name, control, label, defaultValue = "" }: RTEProps) => {
           <Editor
             apiKey={conf.tinymceAPIKey}
             onEditorChange={onChange}
+            initialValue={defaultValue}
             init={{
               referrer_policy: "origin",
               height: 500,

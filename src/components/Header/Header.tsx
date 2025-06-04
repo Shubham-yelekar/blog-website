@@ -9,7 +9,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
 const Header = () => {
-  const [menuOpen, setMenuOpen] = useState<boolean>(true);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   const authStatus = useSelector((state: RootState) => state.auth.status);
   const currentUser = useSelector((state: RootState) => state.auth.userData);
@@ -42,16 +42,16 @@ const Header = () => {
             <button
               onClick={() => setMenuOpen((prev) => !prev)}
               type="button"
-              className="py-2 px-4 rounded-xl flex items-center justify-between gap-4 bg-studio-500"
+              className="py-3 px-5 rounded-full flex items-center justify-between gap-4 bg-studio-500 transition-all cursor-pointer hover:bg-studio-450"
             >
-              <span className="text-studio-50 text-bold">
+              <span className="text-studio-50 font-extrabold">
                 {currentUser?.name}
               </span>
               <span>
                 {menuOpen ? (
-                  <ChevronDown className="text-studio-50 " />
-                ) : (
                   <ChevronUp className="text-studio-50 " />
+                ) : (
+                  <ChevronDown className="text-studio-50 " />
                 )}
               </span>
             </button>
@@ -59,7 +59,7 @@ const Header = () => {
               <div className="absolute w-36 top-20 right-4 bg-white rounded-xl p-4 flex flex-col gap-4 shadow-[0px_1px_5px_0px_rgba(0,_0,_0,_0.1)]">
                 <Link
                   className="border-b-2 border-transparent font-semibold text-studio-450 hover:text-studio-800 transition-colors duration-300 transform hover:border-studio-500 "
-                  to={"/"}
+                  to={"/your-posts"}
                 >
                   Your Posts
                 </Link>
