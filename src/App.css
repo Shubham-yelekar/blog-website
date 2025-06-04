@@ -21,14 +21,14 @@ body {
 }
 
 h1 {
-  font-size: clamp(3rem, 1rem + 5vw, 5rem);
-  line-height: clamp(3rem, 1rem + 5vw, 5rem);
+  font-size: clamp(3.2rem, 1rem + 4.2vw, 5rem);
+  line-height: clamp(3.6rem, 1rem + 4.8vw, 5.4rem);
   letter-spacing: -0.08rem;
 }
 
 h2 {
-  font-size: clamp(2.5rem, 1rem + 3vw, 3.8rem);
-  line-height: clamp(2.5rem, 1rem + 3vw, 3.8rem);
+  font-size: clamp(2.4rem, 1rem + 3vw, 3.6rem);
+  line-height: clamp(3rem, 1rem + 3.6vw, 4.2rem);
   letter-spacing: -0.07rem;
 }
 
@@ -45,7 +45,7 @@ h4 {
 
 h5 {
   font-size: clamp(0.6rem, 1rem + 0.5vw, 1.2rem);
-  line-height: clamp(1.2rem, 1rem + 0.5vw, 2rem);
+  line-height: clamp(1.4rem, 1rem + 1.6vw, 1.8rem);
   letter-spacing: -0.04rem;
 }
 
@@ -66,7 +66,7 @@ p {
     var(--color-studio-400),
     var(--color-studio-600)
   );
-  width: 8rem;
+  width: auto;
   color: var(--color-studio-50);
   padding: 10px 24px;
   border-radius: 24px;
@@ -79,7 +79,7 @@ p {
 }
 
 .secondary-btn {
-  width: 8rem;
+  width: fit-content;
   background: linear-gradient(
     0deg,
     var(--color-studio-100),
@@ -180,8 +180,9 @@ p {
 
 .blog-page p {
   font-size: clamp(0.2rem, 0.8rem + 1vw, 1rem);
-  line-height: clamp(1rem, 0.8rem + 1vw, 1.4rem);
+  line-height: clamp(1.4rem, 0.8rem + 1.8vw, 1.8rem);
   color: #313131;
+  margin-bottom: 5px;
 }
 
 .blog-page hr {

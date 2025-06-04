@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import service from "../backend/Config";
-import tags from "./Constants/TagsOptions";
+
 interface cardType {
   $id: string;
   title: string;

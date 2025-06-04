@@ -3,7 +3,7 @@ import { Client, ID, Databases, Storage, Query } from "appwrite";
 
 interface serviceInt {
   title: string;
-  slug: string;
+  slug?: string;
   content: string;
   featuredImage: string;
   status: string;
@@ -47,7 +47,7 @@ export class Service {
       return await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
-        ID.unique(),
+        slug || ID.unique(),
         { title, content, featuredImage, status, userId, author, tags }
       );
     } catch (error) {

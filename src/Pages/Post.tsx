@@ -17,7 +17,6 @@ interface Post extends Models.Document {
 
 const Post = () => {
   const [post, setPost] = useState<Post | null>(null);
-  console.log(post);
 
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -46,21 +45,6 @@ const Post = () => {
   return post ? (
     <div className="relative">
       <div className="w-full h-[50vh] flex justify-center relative rounded-xl">
-        {isAuthor && (
-          <div className="absolute left-4 top-4 ">
-            <Link to={`/edit-post/${post.$id}`}>
-              <Button className="bg-studio-50 px-4 py-1 rounded-full text-sm font-semibold shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)]">
-                Edit
-              </Button>
-            </Link>
-            <Button
-              className=" px-4 py-1 bg-red-600 text-white rounded-full text-sm font-semibold shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)] ml-2"
-              onClick={deletePost}
-            >
-              Delete
-            </Button>
-          </div>
-        )}
         <img
           src={service.getFileView(post?.featuredImage)}
           alt={post?.$id}
@@ -71,9 +55,26 @@ const Post = () => {
       <BlogWrapper>
         <div className="w-full mb-6 p-2 relative">
           <h2 className="text-2xl font-bold mb-4">{post.title}</h2>
-          <p className="mb-4 text-studio-200">
+          <p className="mb-4 text-studio-200 relative">
             By
             <span className="text-studio-450 font-bold"> {userData?.name}</span>
+            <span>
+              {isAuthor && (
+                <div className="absolute right-0 top-0">
+                  <Link to={`/edit-post/${post.$id}`}>
+                    <Button className="bg-studio-50 px-4 py-1 rounded-full text-sm font-semibold shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)]">
+                      Edit
+                    </Button>
+                  </Link>
+                  <Button
+                    className=" px-4 py-1 bg-red-600 text-white rounded-full text-sm font-semibold shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)] ml-2"
+                    onClick={deletePost}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              )}
+            </span>
           </p>
           <div className="w-full h-[1px] bg-studio-100"></div>
           <div className="flex gap-2 flex-wrap mt-2">

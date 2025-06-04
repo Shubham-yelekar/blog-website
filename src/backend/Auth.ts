@@ -74,6 +74,34 @@ export class AuthService {
       throw new Error(`Error in Current User : ${error}`);
     }
   }
+
+  async checkActiveSessions() {
+    try {
+      const session = await this.account.getSession("current");
+      return session !== null;
+    } catch (error) {
+      // If there's an error (e.g., no active session), handle it appropriately
+      throw new Error(`Error in Current active Sessions : ${error}`);
+    }
+  }
+
+  async deleteAllSessions() {
+    try {
+      // get the list of the setions
+      // const sessions = await this.account.listSessions();
+      // console.log(sessions);
+
+      // await Promise.all(
+      //   sessions.sessions.map(async (session) => {
+      //     await this.account.deleteSession(session.$id);
+      //   })
+      // );
+      await this.account.deleteSessions();
+      console.log("sessions deleted successfully");
+    } catch (error) {
+      throw new Error(`Error in Deleting sessions User : ${error}`);
+    }
+  }
 }
 
 // Create an instance of AuthService

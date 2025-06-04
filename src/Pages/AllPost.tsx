@@ -9,6 +9,8 @@ interface Post extends Models.Document {
   featuredImage: string;
   status: string;
   userId: string;
+  author: string;
+  tags: string[];
 }
 
 const AllPost = () => {
@@ -24,9 +26,9 @@ const AllPost = () => {
   return (
     <div className="w-full pu-8">
       <Main>
-        <div className="flex flex-wrap">
+        <div className="grid grid-cols-1 gap-4 max-w-[1200px] m-auto md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
-            <div key={post.id} className="p-2 w-14">
+            <div key={post.id} className="">
               <Card {...post} />
             </div>
           ))}

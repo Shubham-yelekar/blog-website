@@ -22,6 +22,11 @@ const Login = () => {
   const login = async (data: LoginFormData) => {
     setError("");
     try {
+      // const activeSession = await authService.checkActiveSessions();
+      // if (activeSession) {
+      //   await authService.deleteSessions();
+      // }
+      // await authService.deleteAllSessions();
       const session = await authService.login(data);
       if (session) {
         const userData = await authService.getCurrentUser();

@@ -1,4 +1,3 @@
-import LoginBtn from "./LoginBtn";
 import Logo from "./Logo";
 import SignupBtn from "./SignupBtn";
 import type { RootState } from "../../state/store";
@@ -6,27 +5,79 @@ import { useSelector } from "react-redux";
 import LogoutBtn from "./LogoutBtn";
 import { WritePostBtn } from "./WritePostBtn";
 import { Link } from "react-router";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { useState } from "react";
 
 const Header = () => {
+  const [menuOpen, setMenuOpen] = useState<boolean>(true);
+
   const authStatus = useSelector((state: RootState) => state.auth.status);
+  const currentUser = useSelector((state: RootState) => state.auth.userData);
 
   return (
     <header className="flex items-center py-2 justify-between border-b-[1px] border-[#e6e6e6] bg-white md:px-4 md:py-2">
       <Link to={"/"}>
         <div className="flex items-center gap-1 md:gap-4">
-          <Logo className="scale-60 md:scale-80" />
-          <span className=" font-bold text-lg text-studio-500 md:text-2xl">
-            Studio
-          </span>
-          <div className="w-[1px] h-8 bg-studio-100"></div>
-          <span className=" font-regular text-md text-studio-300 md:text-2xl">
-            Blogs
-          </span>
+          <Logo className="scale-50 sm:scale-80 md:scale-80" />
+          <div className="flex flex-col items-start sm:gap-1 sm:flex-row md:gap-4">
+            <span className=" font-bold text-sm text-studio-500 md:text-2xl ">
+              Studio
+            </span>
+            <span className=" font-regular text-sm text-studio-300 md:text-2xl">
+              Blogs
+            </span>
+          </div>
         </div>
       </Link>
-      <div className="flex gap-1 p-2 md:gap-4">
-        {authStatus ? <LogoutBtn /> : <LoginBtn />}
-        {authStatus ? <WritePostBtn /> : <SignupBtn />}
+
+      <div className="flex items-center gap-2 h-full">
+        <Link
+          className="border-b-2 border-transparent text-studio-450 font-semibold hover:text-studio-800 transition-colors duration-300 transform hover:border-studio-500 mx-1.5 sm:mx-6"
+          to={"/all-posts"}
+        >
+          All Blogs
+        </Link>
+        {authStatus ? (
+          <>
+            <button
+              onClick={() => setMenuOpen((prev) => !prev)}
+              type="button"
+              className="py-2 px-4 rounded-xl flex items-center justify-between gap-4 bg-studio-500"
+            >
+              <span className="text-studio-50 text-bold">
+                {currentUser?.name}
+              </span>
+              <span>
+                {menuOpen ? (
+                  <ChevronDown className="text-studio-50 " />
+                ) : (
+                  <ChevronUp className="text-studio-50 " />
+                )}
+              </span>
+            </button>
+            {menuOpen && (
+              <div className="absolute w-36 top-20 right-4 bg-white rounded-xl p-4 flex flex-col gap-4 shadow-[0px_1px_5px_0px_rgba(0,_0,_0,_0.1)]">
+                <Link
+                  className="border-b-2 border-transparent font-semibold text-studio-450 hover:text-studio-800 transition-colors duration-300 transform hover:border-studio-500 "
+                  to={"/"}
+                >
+                  Your Posts
+                </Link>
+                <LogoutBtn />
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <Link
+              to={"/login"}
+              className="border-b-2 border-transparent font-semibold text-studio-450 hover:text-studio-800 transition-colors duration-300 transform hover:border-studio-500 mx-1.5 sm:mx-6"
+            >
+              Log in
+            </Link>
+            <SignupBtn />
+          </>
+        )}
       </div>
     </header>
   );
