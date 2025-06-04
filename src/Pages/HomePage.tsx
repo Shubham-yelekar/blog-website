@@ -32,16 +32,16 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="w-full py-8 ">
+    <div className="w-full py-8 overflow-x-hidden">
       <Main>
-        <div className="overflow-hidden">
+        <div className="relative">
           <img
-            className="absolute -right-72 -z-5 top-24 opacity-30 "
+            className="absolute -right-72 -z-5 top-24 opacity-20 "
             src="/log-shape.webp"
             alt=""
           />
           <img
-            className="absolute -left-72 hidden -z-5 top-24 opacity-30 md:block"
+            className="absolute -left-72 hidden -z-5 top-24 opacity-20 md:block"
             src="/log-shape.webp"
             alt=""
           />
