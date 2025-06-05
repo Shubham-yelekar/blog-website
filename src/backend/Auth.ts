@@ -37,10 +37,9 @@ export class AuthService {
       );
       if (userAccount) {
         // Automatically log in the user after account creation
-        return this.login({
-          email,
-          password,
-        });
+        const session = await this.login({ email, password });
+
+        return session;
       } else {
         return userAccount;
       }
@@ -52,7 +51,12 @@ export class AuthService {
   // Log in an existing user with email and password
   async login({ email, password }: LoginData) {
     try {
-      return await this.account.createEmailPasswordSession(email, password);
+      const session = await this.account.createEmailPasswordSession(
+        email,
+        password
+      );
+      console.log("Session created successfully:", session);
+      return session;
     } catch (error) {
       throw new Error(`Error in Loging Account : ${error}`);
     }
@@ -78,8 +82,15 @@ export class AuthService {
   async checkActiveSessions() {
     try {
       const session = await this.account.getSession("current");
+
       return session !== null;
     } catch (error) {
+      if (
+        (error as any).code === 401 ||
+        (error as any).type === "general_unauthorized_scope"
+      ) {
+        return false;
+      }
       // If there's an error (e.g., no active session), handle it appropriately
       throw new Error(`Error in Current active Sessions : ${error}`);
     }
@@ -88,17 +99,25 @@ export class AuthService {
   async deleteAllSessions() {
     try {
       // get the list of the setions
-      // const sessions = await this.account.listSessions();
-      // console.log(sessions);
+      const sessions = await this.account.listSessions();
 
-      // await Promise.all(
-      //   sessions.sessions.map(async (session) => {
-      //     await this.account.deleteSession(session.$id);
-      //   })
-      // );
-      await this.account.deleteSessions();
-      console.log("sessions deleted successfully");
+      if (sessions.sessions.length === 0) {
+        return;
+      }
+
+      await Promise.all(
+        sessions.sessions.map(async (session) => {
+          console.log(`Deleting session: ${session.$id}`);
+          await this.account.deleteSession(session.$id);
+        })
+      );
     } catch (error) {
+      if (
+        (error as any).code === 401 ||
+        (error as any).type === "general_unauthorized_scope"
+      ) {
+        return;
+      }
       throw new Error(`Error in Deleting sessions User : ${error}`);
     }
   }

@@ -58,10 +58,7 @@ const Post = () => {
           <div className="relative">
             <p className="mb-4 text-studio-200 relative">
               By
-              <span className="text-studio-450 font-bold">
-                {" "}
-                {userData?.name}
-              </span>
+              <span className="text-studio-450 font-bold"> {post.author}</span>
             </p>
             {isAuthor && (
               <div className="absolute right-0 bottom-0">
