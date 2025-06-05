@@ -14,6 +14,7 @@ interface serviceInt {
 
 interface UpdatePostParams {
   title?: string;
+  slug?: string;
   content?: string;
   featuredImage?: string;
   status?: string;
@@ -47,8 +48,8 @@ export class Service {
       return await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
-        slug || ID.unique(),
-        { title, content, featuredImage, status, userId, author, tags }
+        ID.unique(),
+        { title, content, featuredImage, status, userId, author, tags, slug }
       );
     } catch (error) {
       throw new Error(`Error in creating post: ${error}`);
@@ -56,15 +57,15 @@ export class Service {
   }
 
   async updatePost(
-    slug: string,
-    { title, content, featuredImage, status, tags }: UpdatePostParams
+    id: string,
+    { title, content, featuredImage, status, tags, slug }: UpdatePostParams
   ) {
     try {
       return await this.databases.updateDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
-        slug,
-        { title, content, featuredImage, status, tags }
+        id,
+        { title, content, featuredImage, status, tags, slug }
       );
     } catch (error) {
       throw new Error(`Error in Update post: ${error}`);

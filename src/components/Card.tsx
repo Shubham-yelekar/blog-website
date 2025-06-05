@@ -7,10 +7,11 @@ interface cardType {
   featuredImage: string;
   author: string;
   tags: string[];
+  slug?: string;
 }
-const Card = ({ $id, title, featuredImage, author, tags }: cardType) => {
+const Card = ({ $id, title, featuredImage, author, tags, slug }: cardType) => {
   return (
-    <Link to={`/post/${$id}`}>
+    <Link to={`/post/${slug}?id=${$id}`}>
       <div className="bg-white flex flex-col gap-1 rounded-xl h-full shadow-[0px_1px_5px_0px_rgba(0,_0,_0,_0.05)] p-2 transition-all duration-300 hover:shadow-[0px_1px_8px_0px_rgba(0,_0,_0,_0.1)]">
         <div className="rounded-lg overflow-hidden aspect-video">
           <img

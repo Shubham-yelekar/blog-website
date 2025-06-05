@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router";
 import service from "../backend/Config";
 import { Button, BlogWrapper } from "../components";
 import parse from "html-react-parser";
@@ -19,15 +19,19 @@ const Post = () => {
   const [post, setPost] = useState<Post | null>(null);
 
   const { slug } = useParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const userData = useSelector((state: RootState) => state.auth.userData);
 
   const isAuthor = post && userData ? post.userId === userData.$id : false;
+
   useEffect(() => {
-    if (slug) {
-      service.getPost(slug).then((post) => {
+    const id = searchParams.get("id");
+
+    if (id) {
+      service.getPost(id).then((post) => {
         if (post) setPost(post as Post);
-        else navigate("/");
+        // else navigate("/");
       });
     } else navigate("/");
   }, [slug, navigate]);

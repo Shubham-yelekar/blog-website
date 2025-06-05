@@ -5,13 +5,12 @@ import service from "../backend/Config";
 import { useNavigate } from "react-router";
 import type { RootState } from "../state/store.ts";
 import { useSelector } from "react-redux";
-import { ID } from "appwrite";
+
 import tags from "./Constants/TagsOptions.ts";
-import { Query } from "appwrite";
 
 interface FormData {
-  slug?: string;
   title?: string;
+  slug?: string;
   content?: string;
   featuredImage?: string;
   status?: string;
@@ -50,10 +49,6 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
 
   const navigate = useNavigate();
   const userData = useSelector((state: RootState) => state.auth.userData);
-  const isSlugUnique = async (slug: string): Promise<boolean> => {
-    const existingPosts = await service.getPosts([Query.equal("slug", slug)]);
-    return existingPosts.documents.length === 0;
-  };
 
   const submit = async (data: FormData & { image?: FileList }) => {
     try {
@@ -63,12 +58,6 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
 
       let slug = slugTransform(data.title || "");
 
-      const isUnique = await isSlugUnique(slug);
-
-      if (!isUnique) {
-        slug = `${slug}-${Date.now()}`; // Append timestamp to ensure uniqueness
-      }
-
       if (post?.$id) {
         // Update post
         if (file && post.featuredImage) {
@@ -77,6 +66,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
 
         const updatedPost = await service.updatePost(post.$id, {
           title: data.title,
+          slug,
           content: data.content,
           status: data.status,
           featuredImage: file ? file.$id : post.featuredImage,
@@ -84,7 +74,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
         });
 
         if (updatedPost) {
-          navigate(`/post/${updatedPost.$id}`);
+          navigate(`/post/${updatedPost.slug}?id=${updatedPost.$id}`);
         }
       } else {
         // Create post
@@ -92,7 +82,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
 
         const newPost = await service.createPost({
           title: data.title || "",
-          slug: data.slug || ID.unique(),
+          slug: data.slug,
           content: data.content || "",
           status: data.status || "active",
           featuredImage: file.$id,
@@ -102,7 +92,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
         });
 
         if (newPost) {
-          navigate(`/post/${newPost.$id}`);
+          navigate(`/post/${newPost.slug}?id=${newPost.$id}`);
         }
       }
     } catch (err) {
@@ -118,8 +108,7 @@ const PostForm: React.FC<PostFormProps> = ({ post }) => {
         .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and dashes
         .replace(/\s+/g, "-") // Replace spaces with dashes
         .replace(/-+/g, "-") // Replace multiple dashes with a single one
-        .replace(/^-+|-+$/g, "") // Trim dashes from start and end
-        .slice(0, 36); // Limit to 36 characters
+        .replace(/^-+|-+$/g, ""); // Trim dashes from start and end
     }
   }, []);
 

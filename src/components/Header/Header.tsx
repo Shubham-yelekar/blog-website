@@ -3,7 +3,6 @@ import SignupBtn from "./SignupBtn";
 import type { RootState } from "../../state/store";
 import { useSelector } from "react-redux";
 import LogoutBtn from "./LogoutBtn";
-import { WritePostBtn } from "./WritePostBtn";
 import { Link } from "react-router";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
