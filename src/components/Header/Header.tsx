@@ -55,8 +55,9 @@ const Header = () => {
               </span>
             </button>
             {menuOpen && (
-              <div className="absolute w-36 top-20 right-4 bg-white rounded-xl p-4 flex flex-col gap-4 shadow-[0px_1px_5px_0px_rgba(0,_0,_0,_0.1)]">
+              <div className="absolute z-10 w-fit top-20 right-4 bg-white rounded-xl px-4 py-2 flex flex-col gap-4 shadow-[0px_1px_5px_0px_rgba(0,_0,_0,_0.1)]">
                 <Link
+                  onClick={() => setMenuOpen(false)}
                   className="border-b-2 border-transparent font-semibold text-studio-450 hover:text-studio-800 transition-colors duration-300 transform hover:border-studio-500 "
                   to={"/your-posts"}
                 >

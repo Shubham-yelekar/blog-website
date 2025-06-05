@@ -2,6 +2,8 @@
 
 A blog web site using appwrite as a backend
 
+![thumbnail](./public/image.png)
+
 ## Requirements
 
 - TypeScript
