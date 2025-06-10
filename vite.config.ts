@@ -4,7 +4,7 @@ export default defineConfig({
   plugins: [tailwindcss()],
   build: {
     rollupOptions: {
-      external: ['@tinymce/miniature'],
+      external: ["/node_modules/@tinymce/miniature"],
     },
   },
 });
